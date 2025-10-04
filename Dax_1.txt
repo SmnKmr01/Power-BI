@@ -1,0 +1,30 @@
+Q1. Find the First Purchase Date of Each customer
+
+Scenario - You want to see when a customer first purchased
+
+First Purchase Date = 
+	CALCULATE(MIN(Sales[Date]),ALLEXCEPT(Sales, Sales[CustomerID]))
+
+Q2.Show Sales ONly for Last 3 Months
+
+Scenario - Create a measure that shows sales in the last 3 months from Today
+
+Sales Last 3 Months = 
+	CALCULATE(SUM(Sales[SalesAmount]), 
+	DATESINPERIOD('Date'[Date], MAX('Date'[Date]), -3, MONTH))
+
+
+Q3. Find the customer with the Highest Purchase in Each Region
+
+Scenario : From Sales table, get the top customer in each region
+
+Top Customer Sales = CALCULATE(MAXX( VALUES(Sales[CustomerID], CALCULATE(SUM(Sales[SalesAmount]))),ALLEXCEPT(Sales, Sales[Region]))
+
+
+Q4.Calculate Average Sales per Customer
+
+Scenario - Find out the average revenue generated per customer
+
+Avg Sales per customer = 
+	DIVIDE(SUM(Sales[SalesAmount]),
+	DISTINCTCOUNT(Sales[CustomerID]))
